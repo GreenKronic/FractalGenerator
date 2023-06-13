@@ -1,8 +1,3 @@
- /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Fractals;
 import java.awt.*;
 import javax.swing.*;
@@ -14,7 +9,7 @@ import javax.imageio.ImageIO;
  * @author kk
  */
 
-
+//This is responsible for generating the Fractal image
 public class FractalGen extends JPanel{
     
     public static int sizeFrame = 1000;
@@ -32,27 +27,32 @@ public class FractalGen extends JPanel{
     public static float maxIm = midIm + ( range / 2 ) ;
     public static int iter = 450;
     
+    //inital RGB value 
     public static int red = 17;
     public static int green = 38;
     public static int blue = 108 ;
-    //rgb value for mendelbrot set
-    // each step, alpha changes 
+ 
+ 
+    // each step, alpha changes in order to give more dynamic colour
     public static float hue = 0;
     public static float sat = 0;
     public static float bri = 0;
     public static float change = (float) 0.02;
-    public static float typeFractal = 1 ;
-    
-    
-    //1 == mendelbrot set, 2 == burning ship fractal, 3 == julia set
+ 
+    public static float typeFractal = 1 ;    
+    //1 == mandelbrot set, 2 == burning ship fractal, 3 == julia set
+    //initial is set to mandelbrot
+ 
     public static int bound = 2;
 
     /**
      * @param args the command line arguments
      */
     
-    //RGB to HSB converter
-    private void converter(int r, int g,int b){
+   //RGB to HSB converter
+   //HSB is used for the fractal drawing
+   //RGB is used for the UI, more intuitive to the end user
+   private void converter(int r, int g,int b){
         float [] hsb = Color.RGBtoHSB(r, g, b, null);
         hue = hsb[0];
         sat = hsb[1];
@@ -65,7 +65,9 @@ public class FractalGen extends JPanel{
         return (b); 
     }
     
-    private int mendelbrot ( float Re, float Im, int n ) {
+    private int mandelbrot ( float Re, float Im, int n ) {
+    //f(x) = Z^2 + C
+      
         //real and imeginary part of Z_(n-1)
         float znRe = 0;
         float znIm = 0;
@@ -151,11 +153,12 @@ public class FractalGen extends JPanel{
         return (n);
     }
 
-    
+    //Save image function
     public void save(){
         try{
             
-            String fractals[] = {"empty","Mendelbrot","Burning ship","Julia"};
+            String fractals[] = {"empty","Mandelbrot","Burning ship","Julia"};
+         
             BufferedImage ScreenCap = new Robot().createScreenCapture(new Rectangle(getX(),getY(),sizeFrame,sizeFrame));
             setVisible(true);
             Graphics2D g2d = ScreenCap.createGraphics();
@@ -168,6 +171,8 @@ public class FractalGen extends JPanel{
         }
     }
     
+ 
+    //painting
     public FractalGen(){
   
         this.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -187,7 +192,7 @@ public class FractalGen extends JPanel{
                 float re = (float) (startRe + (stepSize * r));
                 int result = 0;
                 if (typeFractal == 1){
-                    result = mendelbrot(re, im ,iter);
+                    result = meadelbrot(re, im ,iter);
                 }else if (typeFractal == 2){
                     result = burningship(-re, -im, iter);
                 }else if (typeFractal == 3){
