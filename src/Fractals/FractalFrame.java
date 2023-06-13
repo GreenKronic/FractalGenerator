@@ -1,10 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Fractals;
-
 
 import java.awt.event.MouseListener;
 import javax.swing.*;
@@ -30,6 +24,7 @@ class FractalFrame extends JFrame implements MouseListener  {
     
     @Override
     public void mouseClicked(MouseEvent e) {
+        //get current mouse location and orders to zoom in or out accordingly 
         if (updating == false){
             updating = true;
             UtilityBox.push(UtilityBox.undo);
@@ -38,9 +33,9 @@ class FractalFrame extends JFrame implements MouseListener  {
             }else if(UtilityBox.zoom == false){
                 reduce(e.getX(),e.getY());
             }    
-        update();}
+        update(); //redraw accordingly
+        }
     }
-    
     @Override
     public void mousePressed(MouseEvent e) {
         
@@ -59,7 +54,7 @@ class FractalFrame extends JFrame implements MouseListener  {
     }
     
     
-    
+    //zooming is achived by modifying the coordinates displayed
     private void enlarge(float x_p, float y_p){
         mouseLoc(x_p, y_p);
         FractalGen.range = FractalGen.range / 2;
@@ -73,9 +68,8 @@ class FractalFrame extends JFrame implements MouseListener  {
     
     private void mouseLoc(float x_p, float y_p){
         //this gives the coordinate of pointer on the screen
-        //would want it to give coordinate on the JPannal 
-       
-        //have to convert java coordinate to normal cartaisan coordinate
+
+        //conversion to cartaisan coordinate
         FractalGen.midRe = FractalGen.startRe + ( FractalGen.stepSize * ((float)x_p) );
         FractalGen.midIm = FractalGen.startIm - ( FractalGen.stepSize * ((float)y_p) );  
     }  
