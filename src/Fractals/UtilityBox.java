@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Fractals;
 import java.awt.*;
 import javax.swing.*;
@@ -18,12 +13,18 @@ public static boolean zoom = true;
 public static boolean update = false;
 
 private static int sizeReun = 20;
+// max un/re do values stored
+
 private static int typeData = 8;
+//eight data types required to create identical Factal
+    
+//undo redo stacks
+//when un/re do was pressed, this data is feeded to FractalGen and recreates identical fractal to past
 public static float undo [][];
 public static float redo [][];
 //[type of data][number of stored data]
-//type of data : 0 = type, 1 = range, 2 = mid_re, 3 = mid_im, 4 = rSlider, 5 = gSlider, 6 = bSlider, 7 = max iter (8 data)
-// 0 on fractal type incdecates that the stack is empty
+//type of data : 0 = type, 1 = range, 2 = mid_re (real component of middle coodinate), 3 = mid_im (imaginary component of middle coodinate), 4 = rSlider(R value), 5 = gSlider(G value), 6 = bSlider(B value), 7 = max iteration (8 data)
+// if Fractal type is 0, stack is empty
     
     public UtilityBox() {
         undo = new float [typeData][sizeReun];
@@ -43,7 +44,7 @@ public static float redo [][];
     }
     
     
-    
+    //stack pop function
     public void pop( float a[][] ){
         float dummy [][] = a;
         FractalGen.typeFractal = dummy[0][sizeReun - 1];
@@ -68,6 +69,7 @@ public static float redo [][];
         }
     }
     
+    //stack push function
     public static void push( float a[][] ){
         float dummy [][] = a;
         for (int i = 0 ; i < sizeReun - 1 ; i++){
@@ -87,6 +89,7 @@ public static float redo [][];
         
     }
     
+    //inital values when program is booted up
     private void initial(){
         FractalGen.midIm = 0;
         FractalGen.midRe = 0;
@@ -112,11 +115,11 @@ public static float redo [][];
         jLabel2 = new javax.swing.JLabel();
         updateButton = new javax.swing.JButton();
         colorPreview = new javax.swing.JPanel();
-        rSlider = new javax.swing.JSlider(0,255,17);
+        rSlider = new javax.swing.JSlider();
         rLabel = new javax.swing.JLabel();
         gSlider = new javax.swing.JSlider();
         gLabel = new javax.swing.JLabel();
-        bSlider = new javax.swing.JSlider(0,255,108);
+        bSlider = new javax.swing.JSlider();
         bLabel = new javax.swing.JLabel();
         zoominRadio = new javax.swing.JRadioButton();
         zoomoutRadio = new javax.swing.JRadioButton();
@@ -153,9 +156,9 @@ public static float redo [][];
             colorPreviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 117, Short.MAX_VALUE)
         );
-
+        
         rSlider.setMaximum(255);
-        rSlider.setValue(17);
+        rSlider.setValue(FractalGen.red);
         rSlider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 rSliderStateChanged(evt);
@@ -165,7 +168,7 @@ public static float redo [][];
         rLabel.setText("Red : " + rSlider.getValue());
 
         gSlider.setMaximum(255);
-        gSlider.setValue(38);
+        gSlider.setValue(FractalGen.green);
         gSlider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 gSliderStateChanged(evt);
@@ -175,7 +178,7 @@ public static float redo [][];
         gLabel.setText("Green : " + gSlider.getValue());
 
         bSlider.setMaximum(255);
-        bSlider.setValue(108);
+        bSlider.setValue(FractalGen.blue);
         bSlider.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         bSlider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -214,7 +217,7 @@ public static float redo [][];
             }
         });
 
-        fractalChooser.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mendelbrot", "Burning Ship", "Julia" }));
+        fractalChooser.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mendelbrot", "Burning Ship", "Julia" }));//maybe utilise fractals string in FractalGen
         fractalChooser.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 fractalChooserItemStateChanged(evt);
@@ -347,6 +350,7 @@ public static float redo [][];
  
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
         // TODO add your handling code here:
+        // When update was pressed
         if (FractalFrame.updating == false){
             push(undo);
             FractalGen.red = rSlider.getValue();
