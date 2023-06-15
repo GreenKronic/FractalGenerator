@@ -12,6 +12,23 @@ import javax.imageio.ImageIO;
 //This is responsible for generating the Fractal image
 public class FractalGen extends JPanel{
     
+    public static String fractals[] = {"empty","Mandelbrot","Burning ship","Julia"};
+    //available fractals list
+    
+    public static float typeFractal = 1 ;
+    //1 == mandelbrot set, 2 == burning ship fractal, 3 == julia set
+    //initial is set to mandelbrot
+ 
+    //inital RGB value 
+    public static int red = 17;
+    public static int green = 38;
+    public static int blue = 108 ;
+    
+    
+    public static int bound = 2;
+    
+    
+    
     public static int sizeFrame = 1000;
     private static int sizeOval = 2;
     
@@ -27,10 +44,6 @@ public class FractalGen extends JPanel{
     public static float maxIm = midIm + ( range / 2 ) ;
     public static int iter = 450;
     
-    //inital RGB value 
-    public static int red = 17;
-    public static int green = 38;
-    public static int blue = 108 ;
  
  
     // each step, alpha changes in order to give more dynamic colour
@@ -39,11 +52,6 @@ public class FractalGen extends JPanel{
     public static float bri = 0;
     public static float change = (float) 0.02;
  
-    public static float typeFractal = 1 ;    
-    //1 == mandelbrot set, 2 == burning ship fractal, 3 == julia set
-    //initial is set to mandelbrot
- 
-    public static int bound = 2;
 
     /**
      * @param args the command line arguments
@@ -156,9 +164,7 @@ public class FractalGen extends JPanel{
     //Save image function
     public void save(){
         try{
-            
-            String fractals[] = {"empty","Mandelbrot","Burning ship","Julia"};
-         
+
             BufferedImage ScreenCap = new Robot().createScreenCapture(new Rectangle(getX(),getY(),sizeFrame,sizeFrame));
             setVisible(true);
             Graphics2D g2d = ScreenCap.createGraphics();
