@@ -90,6 +90,7 @@ public static float redo [][];
     }
     
     //inital values when program is booted up
+    //is redundant in FractalGen
     private void initial(){
         FractalGen.midIm = 0;
         FractalGen.midRe = 0;
