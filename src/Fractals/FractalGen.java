@@ -198,7 +198,7 @@ public class FractalGen extends JPanel{
                 float re = (float) (startRe + (stepSize * r));
                 int result = 0;
                 if (typeFractal == 1){
-                    result = meadelbrot(re, im ,iter);
+                    result = mandelbrot(re, im ,iter);
                 }else if (typeFractal == 2){
                     result = burningship(-re, -im, iter);
                 }else if (typeFractal == 3){
