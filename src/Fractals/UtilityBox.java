@@ -88,20 +88,7 @@ public static float redo [][];
         a[7][sizeReun - 1] = FractalGen.iter;
         
     }
-    
-    //inital values when program is booted up
-    //is redundant in FractalGen
-    private void initial(){
-        FractalGen.midIm = 0;
-        FractalGen.midRe = 0;
-        FractalGen.range = 4;
-        FractalGen.red = 17;
-        FractalGen.green = 38;
-        FractalGen.blue = 108;
-        FractalGen.iter = 450;
-        
-        changeColor(FractalGen.red,FractalGen.green,FractalGen.blue);
-    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -362,7 +349,8 @@ public static float redo [][];
             FractalGen.iter = iterSlider.getValue();
         
             if (FractalGen.typeFractal != choice){
-                initial();
+                FractalGen.initial();
+                changeColor(FractalGen.red,FractalGen.green,FractalGen.blue);
             }else{
 
             }
@@ -382,7 +370,8 @@ public static float redo [][];
         // TODO add your handling code here:
         if (FractalFrame.updating == false){
             push(undo);
-            initial();
+            FractalGen.initial();
+            changeColor(FractalGen.red,FractalGen.green,FractalGen.blue);
             FractalFrame.update();
         }
     }//GEN-LAST:event_resetButtonActionPerformed
