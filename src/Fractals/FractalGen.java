@@ -20,9 +20,9 @@ public class FractalGen extends JPanel{
     //initial is set to mandelbrot
  
     //inital RGB value 
-    public static int red = 17;
-    public static int green = 38;
-    public static int blue = 108 ;
+    public static int red;
+    public static int green;
+    public static int blue;
     
     
     public static int bound = 2;
@@ -34,24 +34,33 @@ public class FractalGen extends JPanel{
     
     // range and mid point to enlarge (Like TI-84)
     // it will always have 1:1 ratio
-    public static float midRe = (float) 0;
-    public static float midIm = (float) 0;
-    public static float range = (float) 4;
+    public static float midRe;
+    public static float midIm;
+    public static float range;
     public static float startRe = midRe - (range / 2);
     public static float startIm = midIm + (range / 2);
     public static float stepSize = range / sizeFrame;
     public static float minRe = midRe - ( range / 2 ) ;
     public static float maxIm = midIm + ( range / 2 ) ;
-    public static int iter = 450;
+    public static int iter;
     
  
  
     // each step, alpha changes in order to give more dynamic colour
-    public static float hue = 0;
-    public static float sat = 0;
-    public static float bri = 0;
+    public static float hue;
+    public static float sat;
+    public static float bri;
     public static float change = (float) 0.02;
- 
+
+    public static void initial(){
+        FractalGen.midIm = (float) 0;
+        FractalGen.midRe = (float) 0;
+        FractalGen.range = 4;
+        FractalGen.red = 17;
+        FractalGen.green = 38;
+        FractalGen.blue = 108;
+        FractalGen.iter = 450;
+    }
 
     /**
      * @param args the command line arguments
@@ -169,6 +178,7 @@ public class FractalGen extends JPanel{
             setVisible(true);
             Graphics2D g2d = ScreenCap.createGraphics();
             this.paintComponent(g2d);
+            //add customizable directory function
             String desktop = System.getProperty("user.home") + "/desktop";
             File img = new File(desktop,fractals[(int)typeFractal] +",RGB("+ red +"," + green +","+ blue + "),mid(" + midRe +"," + midIm + "),range(" +range + "), iter("+ iter +").png");
             ImageIO.write(ScreenCap,"png",img);
