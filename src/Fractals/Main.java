@@ -11,7 +11,7 @@ package Fractals;
  */
 public class Main {
     public static void main(String [] args){
-        
+        FractalGen.initial();     
         new UtilityBox().setVisible(true);
         new FractalFrame();
     }
